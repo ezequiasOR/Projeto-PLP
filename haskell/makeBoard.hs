@@ -46,15 +46,12 @@ main = do
     list1 <- getSample
     list2 <- getSample
     let rows = (build list1 list2)
-    print rows
 
     list1 <- getSample
     list2 <- getSample
     let columns = (build list1 list2)
-    print columns
 
     nums <- getNums
-    print nums
     let board = makeBoard rows columns nums
     print board
 
