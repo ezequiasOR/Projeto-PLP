@@ -1,3 +1,5 @@
+import MakeBoard
+
 split :: Eq a => a -> [a] -> [[a]]
 split d [] = []
 split d s = x : split d (drop 1 y) where (x,y) = span (/= d) s
@@ -79,6 +81,7 @@ menuOptions = do
 
 jogarOption :: IO()
 jogarOption = do
+    board <- (MakeBoard.getBoard)
     menuOptions
     option <- getLine
     options (read option)
@@ -91,4 +94,4 @@ main = do
 
     if option == "1" then solucaoOption
     else if option == "2" then jogarOption
-         else main
+    else main

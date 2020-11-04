@@ -1,3 +1,8 @@
+module MakeBoard
+(
+    getBoard
+) where
+
 import System.Random (randomRIO)
 
 randomList :: Int -> Int -> Int -> IO([Int])
@@ -41,8 +46,7 @@ getNums = do
     l <- randomList 1 9 9
     return l
 
-main :: IO()
-main = do
+getBoard = do
     list1 <- getSample
     list2 <- getSample
     let rows = (build list1 list2)
@@ -53,5 +57,5 @@ main = do
 
     nums <- getNums
     let board = makeBoard rows columns nums
-    print board
+    return board
 
