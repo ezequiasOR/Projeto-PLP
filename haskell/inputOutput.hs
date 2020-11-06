@@ -7,7 +7,7 @@ split d s = x : split d (drop 1 y) where (x,y) = span (/= d) s
 firstOption :: IO()
 firstOption = do
     list <- getLine
-    let l = split ',' (read list)
+    let l = split ',' list
     print l
     print "chamar metodo para:"
     print "mostrar o tabuleiro completo se for um jogo valido"
@@ -38,17 +38,47 @@ checkTable :: IO()
 checkTable = do
     print "chamar metodo para checar o tabuleiro"
 
-getTip :: IO()
-getTip = do
-    print "dica"
+getColumn :: Char -> Int
+getColumn 'A' = 0
+getColumn 'B' = 1
+getColumn 'C' = 2
+getColumn 'D' = 3
+getColumn 'E' = 4
+getColumn 'F' = 5
+getColumn 'G' = 6
+getColumn 'H' = 7
+getColumn 'I' = 8
+
+getRow :: Char -> Int
+getRow '1' = 0
+getRow '2' = 1
+getRow '3' = 2
+getRow '4' = 3
+getRow '5' = 4
+getRow '6' = 5
+getRow '7' = 6
+getRow '8' = 7
+getRow '9' = 8
+
+getTip :: [[Int]] -> IO()
+getTip completeBoard = do
+    print "Informe a coluna e a linha (Ex. 'A 2'):"
+    line <- getLine
+    let c = (getColumn (line !! 0))
+    let r = (getRow (line !! 2))
+    let row = (completeBoard !! r)
+    let number = (row !! c)
+    print $ "O numero da coluna " ++ show (line !! 0) ++ " e linha " ++ show (line !! 2) ++ " = " ++ show number
+    jogarOption completeBoard
 
 checkWin :: IO()
 checkWin = do
     print "verificar se ganhou"
 
-checkSolution :: IO()
-checkSolution = do
-    print "desistir e verificar solucao"
+checkSolution :: [[Int]] -> IO()
+checkSolution completeBoard = do
+    print completeBoard
+    main
 
 solucaoOption :: IO()
 solucaoOption = do
@@ -61,14 +91,14 @@ solucaoOption = do
     else if option =="2" then secondOption
          else solucaoOption
 
-options :: Int -> IO()
-options 1 = insertNumber
-options 2 = removeNumber
-options 3 = checkTable
-options 4 = getTip
-options 5 = checkWin
-options 6 = checkSolution
-options n = jogarOption
+options :: [[Int]] -> Int -> IO()
+options completeBoard 1 = insertNumber
+options completeBoard 2 = removeNumber
+options completeBoard 3 = checkTable
+options completeBoard 4 = getTip completeBoard
+options completeBoard 5 = checkWin
+options completeBoard 6 = checkSolution completeBoard
+options completeBoard n = jogarOption completeBoard
 
 menuOptions :: IO()
 menuOptions = do
@@ -79,19 +109,21 @@ menuOptions = do
     print "5 - Verificar se ganhou"
     print "6 - Desistir e verificar solucao"
 
-jogarOption :: IO()
-jogarOption = do
-    board <- (MakeBoard.getBoard)
+jogarOption :: [[Int]] -> IO()
+jogarOption completeBoard = do
     menuOptions
     option <- getLine
-    options (read option)
+    options completeBoard (read option)
 
 main :: IO()
 main = do
     print "1 - Solucao"
     print "2 - Jogar"
+    print "3 - Parar de jogar"
     option <- getLine
+    completeBoard <- (MakeBoard.getBoard)
 
     if option == "1" then solucaoOption
-    else if option == "2" then jogarOption
+    else if option == "2" then jogarOption completeBoard
+    else if option == "3" then print "Fim de Jogo"
     else main
