@@ -1,8 +1,15 @@
 import MakeBoard
 
+cols = ['A','B','C','D','E','F','G','H','I']
+
 split :: Eq a => a -> [a] -> [[a]]
 split d [] = []
 split d s = x : split d (drop 1 y) where (x,y) = span (/= d) s
+
+getIndex :: [Char] -> Char -> Int
+getIndex [] c = -1
+getIndex (c:cs) a | a == c = 0
+                  | otherwise = 1+(getIndex cs a)
 
 firstOption :: IO()
 firstOption = do
@@ -39,26 +46,10 @@ checkTable = do
     print "chamar metodo para checar o tabuleiro"
 
 getColumn :: Char -> Int
-getColumn 'A' = 0
-getColumn 'B' = 1
-getColumn 'C' = 2
-getColumn 'D' = 3
-getColumn 'E' = 4
-getColumn 'F' = 5
-getColumn 'G' = 6
-getColumn 'H' = 7
-getColumn 'I' = 8
+getColumn c = getIndex cols c
 
 getRow :: Char -> Int
-getRow '1' = 0
-getRow '2' = 1
-getRow '3' = 2
-getRow '4' = 3
-getRow '5' = 4
-getRow '6' = 5
-getRow '7' = 6
-getRow '8' = 7
-getRow '9' = 8
+getRow c = read([c]) -1
 
 getTip :: [[Int]] -> IO()
 getTip completeBoard = do
