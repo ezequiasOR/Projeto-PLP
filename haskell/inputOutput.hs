@@ -11,23 +11,38 @@ getIndex [] c = -1
 getIndex (c:cs) a | a == c = 0
                   | otherwise = 1+(getIndex cs a)
 
-firstOption :: IO()
-firstOption = do
+updateMatrix :: [[Int]] -> Int -> (Int, Int) -> [[Int]]
+updateMatrix b e (r,c) =
+    take r b ++
+    [take c (b !! r) ++ [e] ++ drop (c + 1) (b !! r)] ++
+    drop (r + 1) b
+
+fillBoard :: [[Int]] -> [String] -> [[Int]]
+fillBoard b [] = b
+fillBoard b (h:t) = fillBoard board t
+    where board = updateMatrix b (read([(h!!4)])) ((getRow (h !! 2)), (getColumn (h !! 0)))
+
+firstOption :: [[Int]] -> IO()
+firstOption b = do
     list <- getLine
     let l = split ',' list
-    print l
+    let fb = fillBoard b l
+    print fb
     print "chamar metodo para:"
     print "mostrar o tabuleiro completo se for um jogo valido"
     print "ou se existe mais de uma solucao"
+    main
 
 readCells cells = do cell <- readLn
                      if cell == "." then return (reverse cells)
                      else readCells (cell:cells)
 
-secondOption :: IO()
-secondOption = do
+secondOption :: [[Int]] -> IO()
+secondOption b = do
     list <- readCells []
-    print list
+    let fb = fillBoard b list
+    print fb
+    main
 
 insertNumber :: IO()
 insertNumber = do
@@ -71,16 +86,16 @@ checkSolution completeBoard = do
     print completeBoard
     main
 
-solucaoOption :: IO()
-solucaoOption = do
+solucaoOption :: [[Int]] -> IO()
+solucaoOption b = do
     print "Como voce deseja inserir o tabuleiro?"
     print "1 - Uma lista (Ex. 'A 2 4,B 3 7,B 4 2')"
     print "2 - Um cedula por vez (Ex. A 2 4 - coluna; linha; numero)"
     option <- getLine
 
-    if option == "1" then firstOption
-    else if option =="2" then secondOption
-         else solucaoOption
+    if option == "1" then firstOption b
+    else if option =="2" then secondOption b
+         else solucaoOption b
 
 options :: [[Int]] -> Int -> IO()
 options completeBoard 1 = insertNumber
@@ -113,8 +128,9 @@ main = do
     print "3 - Parar de jogar"
     option <- getLine
     completeBoard <- (MakeBoard.getBoard)
+    let board = [[0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0]]
 
-    if option == "1" then solucaoOption
+    if option == "1" then solucaoOption board
     else if option == "2" then jogarOption completeBoard
     else if option == "3" then print "Fim de Jogo"
     else main
