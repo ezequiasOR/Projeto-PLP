@@ -22,12 +22,65 @@ fillBoard b [] = b
 fillBoard b (h:t) = fillBoard board t
     where board = updateMatrix b (read([(h!!4)])) ((getRow (h !! 2)), (getColumn (h !! 0)))
 
+checkRow :: [[Int]] -> Int -> Int -> Bool
+checkRow board r n = n `notElem` (board!!r)
+
+checkAllRows :: [[Int]] -> Int -> Int -> Bool
+checkAllRows fb 9 n = True
+checkAllRows fb x n = if (checkRow fb x n) == False then False
+                      else checkRow fb (x+1) n
+
+checkCol :: [[Int]] -> Int -> Int -> Int -> Bool
+checkCol board 9 _ _ = True
+checkCol board r y n | (row!!y) == n = False
+                     | otherwise     = (checkCol board (r+1) y n)
+                     where row = (board!!r)
+
+checkAllCols :: [[Int]] -> Int -> Int -> Bool
+checkAllCols fb 9 n = True
+checkAllCols fb y n = if (checkCol fb 0 y n) == False then False
+                      else checkCol fb 0 (y+1) n
+
+checkSquare :: [[Int]] -> Int -> Int -> Int -> Bool
+checkSquare fb n x y
+    | ((fb !! y) !! x)     == n     = False
+    | ((fb !! y) !! (x+1)) == n     = False
+    | ((fb !! y) !! (x+2)) == n     = False
+    | ((fb !! (y+1)) !! x) == n     = False
+    | ((fb !! (y+1)) !! (x+1)) == n = False
+    | ((fb !! (y+1)) !! (x+2)) == n = False
+    | ((fb !! (y+2)) !! x) == n     = False
+    | ((fb !! (y+2)) !! (x+1)) == n = False
+    | ((fb !! (y+2)) !! (x+2)) == n = False
+    | otherwise                     = True
+
+check :: [[Int]] -> Int -> Int -> Int -> Bool
+check fb n x y
+    | (y < 3) && (x < 3) = checkSquare fb n 0 0
+    | (y < 3) && (x < 6) = checkSquare fb n 0 3
+    | (y < 3) && (x < 9) = checkSquare fb n 0 6
+    | (y < 6) && (x < 3) = checkSquare fb n 3 0
+    | (y < 6) && (x < 6) = checkSquare fb n 3 3
+    | (y < 6) && (x < 6) = checkSquare fb n 3 6
+    | (y < 9) && (x < 3) = checkSquare fb n 6 0
+    | (y < 9) && (x < 6) = checkSquare fb n 6 3
+    | otherwise          = checkSquare fb n 6 6
+
+possible :: [[Int]] -> Int -> Int -> Int -> Bool
+possible fb y x n
+    | checkAllRows fb 0 n == False = False
+    | checkAllCols fb 0 n == False = False
+    | check fb n x0 y0 == False    = False
+    | otherwise                    = True
+    where x0 = (x `div` 3)*3
+          y0 = (y `div` 3)*3
+
 firstOption :: [[Int]] -> IO()
 firstOption b = do
     list <- getLine
     let l = split ',' list
     let fb = fillBoard b l
-    print fb
+    print (possible fb 1 0 3)
     print "chamar metodo para:"
     print "mostrar o tabuleiro completo se for um jogo valido"
     print "ou se existe mais de uma solucao"
