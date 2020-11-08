@@ -75,15 +75,29 @@ possible fb y x n
     where x0 = (x `div` 3)*3
           y0 = (y `div` 3)*3
 
+setCell :: [[Int]] -> Int -> Int -> Int -> [[Int]]
+setCell fb y x 10 = fb
+setCell fb y x n
+    | possible fb y x n == True = (setCell (updateMatrix (solve (updateMatrix fb n (y, x)) 0) 0 (y, x)) y x (n+1))
+    | otherwise                 = setCell fb y x (n+1)
+
+solveRow :: [[Int]] -> Int -> Int -> [[Int]]
+solveRow fb y 9 = fb
+solveRow fb y x
+    | (row!!x) == 0 = (solveRow (setCell fb y x 1) y (x+1))
+    | otherwise         = solveRow fb y (x+1)
+    where row = (fb!!y)
+
+solve :: [[Int]] -> Int -> [[Int]]
+solve fb 9 = fb
+solve fb y = (solve (solveRow fb 0 y) (y+1))
+
 firstOption :: [[Int]] -> IO()
 firstOption b = do
     list <- getLine
     let l = split ',' list
     let fb = fillBoard b l
-    print (possible fb 1 0 3)
-    print "chamar metodo para:"
-    print "mostrar o tabuleiro completo se for um jogo valido"
-    print "ou se existe mais de uma solucao"
+    print (solve fb 0)
     main
 
 readCells cells = do cell <- readLn
