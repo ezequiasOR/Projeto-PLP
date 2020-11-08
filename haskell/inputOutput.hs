@@ -25,21 +25,11 @@ fillBoard b (h:t) = fillBoard board t
 checkRow :: [[Int]] -> Int -> Int -> Bool
 checkRow board r n = n `notElem` (board!!r)
 
-checkAllRows :: [[Int]] -> Int -> Int -> Bool
-checkAllRows fb 9 n = True
-checkAllRows fb x n = if (checkRow fb x n) == False then False
-                      else checkRow fb (x+1) n
-
 checkCol :: [[Int]] -> Int -> Int -> Int -> Bool
 checkCol board 9 _ _ = True
-checkCol board r y n | (row!!y) == n = False
-                     | otherwise     = (checkCol board (r+1) y n)
+checkCol board r x n | (row!!x) == n = False
+                     | otherwise     = (checkCol board (r+1) x n)
                      where row = (board!!r)
-
-checkAllCols :: [[Int]] -> Int -> Int -> Bool
-checkAllCols fb 9 n = True
-checkAllCols fb y n = if (checkCol fb 0 y n) == False then False
-                      else checkCol fb 0 (y+1) n
 
 checkSquare :: [[Int]] -> Int -> Int -> Int -> Bool
 checkSquare fb n x y
@@ -68,10 +58,8 @@ check fb n x y
 
 possible :: [[Int]] -> Int -> Int -> Int -> Bool
 possible fb y x n
-    | checkAllRows fb 0 n == False = False
-    | checkAllCols fb 0 n == False = False
-    | check fb n x0 y0 == False    = False
-    | otherwise                    = True
+    | (checkRow fb y n == False) || (checkCol fb 0 x n == False) || (check fb n x0 y0 == False) = False
+    | otherwise                                                                                       = True
     where x0 = (x `div` 3)*3
           y0 = (y `div` 3)*3
 
@@ -80,7 +68,7 @@ setCell fb y x 10 = fb
 setCell fb y x n
     | possible fb y x n == True = (setCell (updateMatrix (solve (updateMatrix fb n (y, x)) 0) 0 (y, x)) y x (n+1))
     | otherwise                 = setCell fb y x (n+1)
-
+-- 
 solveRow :: [[Int]] -> Int -> Int -> [[Int]]
 solveRow fb y 9 = fb
 solveRow fb y x
