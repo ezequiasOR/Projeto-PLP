@@ -1,6 +1,7 @@
 module MakeBoard
 (
     getBoard
+    randomList
 ) where
 
 import System.Random (randomRIO)
@@ -58,4 +59,28 @@ getBoard = do
     nums <- getNums
     let board = makeBoard rows columns nums
     return board
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

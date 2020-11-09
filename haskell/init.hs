@@ -28,7 +28,7 @@ firstOption b = do
     list <- getLine
     let l = split ',' list
     let fb = fillBoard b l
-    print (Solve.solve fb 0)
+    printBoard fb
     main
 
 readCells cells = do cell <- readLn
@@ -39,7 +39,7 @@ secondOption :: [[Int]] -> IO()
 secondOption b = do
     list <- readCells []
     let fb = fillBoard b list
-    print fb
+    printBoard fb
     main
 
 insertNumber :: IO()
@@ -47,16 +47,19 @@ insertNumber = do
     line <- getLine
     print line
     print "chamar metodo para inserir numero"
+    main
 
 removeNumber :: IO()
 removeNumber = do
     line <- getLine
     print line
     print "chamar metodo para remover numero"
+    main
 
 checkTable :: IO()
 checkTable = do
     print "chamar metodo para checar o tabuleiro"
+    main
 
 getColumn :: Char -> Int
 getColumn c = getIndex cols c
@@ -78,10 +81,11 @@ getTip completeBoard = do
 checkWin :: IO()
 checkWin = do
     print "verificar se ganhou"
+    main
 
 checkSolution :: [[Int]] -> IO()
 checkSolution completeBoard = do
-    print completeBoard
+    printBoard completeBoard
     main
 
 solucaoOption :: [[Int]] -> IO()
@@ -118,6 +122,12 @@ jogarOption completeBoard = do
     menuOptions
     option <- getLine
     options completeBoard (read option)
+
+printBoard :: [[Int]] -> IO()
+printBoard [] = main
+printBoard (c:cs) = do
+    print c
+    printBoard cs
 
 main :: IO()
 main = do
