@@ -1,3 +1,5 @@
+:- module(getBoard, [board/1]).
+
 base(3).
 side(9).
 rbase([0,1,2]).

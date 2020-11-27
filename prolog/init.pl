@@ -1,3 +1,6 @@
+:- use_module(makeBoard, [board/1]).
+% makeBoard:board(B).
+
 options2(1):- writeln("ler os dados..."),
 	read(input), nl.
 options2(2):- writeln("ler os dados..."), nl.
