@@ -13,26 +13,38 @@ optionJogar :-
 	((Option > 3; Option < 1) -> writeln("Opcao invalida") ,
 		optionJogar ; options2(Option)).
 
-insertNumber:- writeln("esperando joao"), nl, optionSolucao.
+insertNumber(CompleteBoard):- writeln("esperando joao"), nl, optionSolucao(CompleteBoard).
 
-removeNumber:- writeln("esperando joao"), nl, optionSolucao.
+removeNumber(CompleteBoard):- writeln("esperando joao"), nl, optionSolucao(CompleteBoard).
 
-checkTable:- writeln("esperando caio"), nl, optionSolucao.
+checkTable(CompleteBoard):- writeln("esperando caio"), nl, optionSolucao(CompleteBoard).
 
-getTip:- writeln("fazer depois que izaquiel integral o makeboard aqui"), nl, optionSolucao.
 
-checkWin:- writeln("esperando caio"), nl, optionSolucao.
+findElem(CompleteBoard, Row, Col, Elem):- 
+	nth1(Row, CompleteBoard, ARow),
+	nth1(Col, ARow, Elem).
 
-checkSolution:- writeln("fazer depois que izaquiel integral o makeboard aqui"), nl, main.
+getTip(CompleteBoard):-
+	writeln("Digite o numero da linha: (entre 1 e 9)"),
+	read(Row), nl,
+	writeln("Digite o numero da Coluna (entre 1 e 9)") ,
+	read(Col), nl,
+	findElem(CompleteBoard, Row, Col, Elem),
+	writeln(Elem),
+	optionSolucao(CompleteBoard).
 
-options3(1):- insertNumber(), nl.
-options3(2):- removeNumber(), nl.
-options3(3):- checkTable(), nl.
-options3(4):- getTip(), nl.
-options3(5):- checkWin(), nl.
-options3(6):- checkSolution(), nl.
+checkWin(CompleteBoard):- writeln("esperando caio"), nl, optionSolucao(CompleteBoard).
 
-optionSolucao :-
+checkSolution(CompleteBoard):- writeln(CompleteBoard), nl, main.
+
+options3(1, CompleteBoard):- insertNumber(CompleteBoard), nl.
+options3(2, CompleteBoard):- removeNumber(CompleteBoard), nl.
+options3(3, CompleteBoard):- checkTable(CompleteBoard), nl.
+options3(4, CompleteBoard):- getTip(CompleteBoard), nl.
+options3(5, CompleteBoard):- checkWin(CompleteBoard), nl.
+options3(6, CompleteBoard):- checkSolution(CompleteBoard), nl.
+
+optionSolucao(CompleteBoard) :-
 	writeln("1 - Inserir um numero"),
 	writeln("2 - Remover um numero"),
 	writeln("3 - Fazer um check (verificar contradicao)"),
@@ -41,10 +53,10 @@ optionSolucao :-
 	writeln("6 - Desistir e verificar solucao"),
 	read(Option), nl,
 	((Option > 6; Option < 1) -> writeln("Opcao invalida") ,
-		optionSolucao ; options3(Option)).
+		optionSolucao(CompleteBoard) ; options3(Option, CompleteBoard)).
 
 options1(1):- optionJogar(), nl.
-options1(2):- optionSolucao(), nl.
+options1(2):- makeBoard:board(CompleteBoard), optionSolucao(CompleteBoard), nl.
 options1(3):- halt.
 
 main:- write("1 - Solucao"), nl,
