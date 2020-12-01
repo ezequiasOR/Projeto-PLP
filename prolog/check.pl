@@ -34,8 +34,7 @@ checkCell(N, M, Board):-
 
 % Opção de checking simplificada // Testing
 
-% compare_matrix(Board, CompleteBoard) :-
-%   matrix(Board, I, J, Value1),
-%   matrix(CompleteBoard, I, J, Value2),
-%   Value1 == Value2,
-%   fail.
+    matrix(Board, I, J, Value1),
+    matrix(CompleteBoard, I, J, Value2),
+    Value1 == Value2 -> writeln("PARABÉNS, VOCÊ GANHOU!");
+    Value1 \= Value2 -> writeln("DISCREPÂNCIA ENCONTRADA").
