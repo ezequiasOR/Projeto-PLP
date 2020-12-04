@@ -11,29 +11,33 @@ replaceElem( Matrix , X , Y , NewValue , NewMatrix ) :-
 
 removeElem( Matrix, NewMatrix ) :-
   writeln("Digite o numero da linha: (entre 1 e 9)"),
-  read(Y), nl,
-  ((Y < 1 ; Y > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
+  read(Row), nl,
+  ((Row < 1 ; Row > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
   ;
   writeln("Digite o numero da coluna (entre 1 e 9)"),
-  read(X), nl,
-  ((X < 1 ; X > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
+  read(Column), nl,
+  ((Column < 1 ; Column > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
   ;
+  Y is Row - 1,
+  X is Column - 1,
   replaceElem( Matrix , X , Y , 0 , NewMatrix ) ))
   .
 
 insertElem( Matrix , NewMatrix ) :-
   writeln("Digite o numero da linha: (entre 1 e 9)"),
-  read(Y), nl,
-  ((Y < 1 ; Y > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
+  read(Row), nl,
+  ((Row < 1 ; Row > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
   ;
   writeln("Digite o numero da coluna (entre 1 e 9)"),
-  read(X), nl,
-  ((X < 1 ; X > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
+  read(Column), nl,
+  ((Column < 1 ; Column > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
   ;
   writeln("Digite o novo valor (entre 1 e 9)"),
   read(NewValue), nl,
   ((NewValue < 1 ; NewValue > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
   ;
+  Y is Row - 1,
+  X is Column - 1,
   replaceElem( Matrix , X , Y , NewValue , NewMatrix ) )))
   .
 

@@ -15,11 +15,11 @@ optionJogar :-
 		optionJogar ; options2(Option)).
 
 insertNumber(CompleteBoard, GameBoard):-
-	boardElemModification:insertElem(GameBoard, NewBoard), write(GameBoard), nl,
+	boardElemModification:insertElem(GameBoard, NewBoard), write(NewBoard), nl,
 	optionSolucao(CompleteBoard, NewBoard).
 
 removeNumber(CompleteBoard, GameBoard):-
-	boardElemModification:removeElem(GameBoard, NewBoard), write(GameBoard), nl,
+	boardElemModification:removeElem(GameBoard, NewBoard), write(NewBoard), nl,
 	optionSolucao(CompleteBoard, NewBoard).
 
 checkTable(CompleteBoard, GameBoard):-
