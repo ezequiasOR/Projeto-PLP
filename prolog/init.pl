@@ -35,7 +35,9 @@ getTip(CompleteBoard, GameBoard):-
 	writeln("Digite o numero da Coluna (entre 1 e 9)") ,
 	read(Col), nl,
 	findElem(CompleteBoard, Row, Col, Elem),
-	boardElemModification:replaceElem(GameBoard, Row, Col, Elem, NewGameBoard),
+	R is Row - 1,
+ 	C is Column - 1,
+	boardElemModification:replaceElem(GameBoard, R, C, Elem, NewGameBoard),
 	print(NewGameBoard),
 	optionSolucao(CompleteBoard, NewGameBoard).
 
