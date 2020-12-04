@@ -34,7 +34,7 @@ getTip(CompleteBoard):-
 	writeln(Elem),
 	optionSolucao(CompleteBoard).
 
-checkWin(CompleteBoard):- check2:compararTabuleiros(CompleteBoard, NewBoard), nl, optionSolucao(CompleteBoard).
+checkWin(CompleteBoard):- check2:compararTabuleiros(NewBoard, CompleteBoard), nl, optionSolucao(CompleteBoard).
 
 checkSolution(CompleteBoard):- writeln(CompleteBoard), nl, main.
 
