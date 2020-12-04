@@ -15,11 +15,11 @@ optionJogar :-
 		optionJogar ; options2(Option)).
 
 insertNumber(CompleteBoard, GameBoard):-
-	boardElemModification:insertElem(GameBoard, NewBoard), print(NewBoard), nl,
+	boardElemModification:insertElem(GameBoard, NewBoard),
 	optionSolucao(CompleteBoard, NewBoard).
 
 removeNumber(CompleteBoard, GameBoard):-
-	boardElemModification:removeElem(GameBoard, NewBoard), print(NewBoard), nl,
+	boardElemModification:removeElem(GameBoard, NewBoard),
 	optionSolucao(CompleteBoard, NewBoard).
 
 checkTable(CompleteBoard, GameBoard):-
@@ -36,7 +36,6 @@ getTip(CompleteBoard, GameBoard):-
 	read(Col), nl,
 	findElem(CompleteBoard, Row, Col, Elem),
 	boardElemModification:replaceElem(GameBoard, Row, Col, Elem, NewGameBoard),
-	print(NewGameBoard),
 	optionSolucao(CompleteBoard, NewGameBoard).
 
 checkWin(CompleteBoard, GameBoard):-
@@ -53,6 +52,8 @@ options3(5, CompleteBoard, GameBoard):- checkWin(CompleteBoard, GameBoard), nl.
 options3(6, CompleteBoard, GameBoard):- checkSolution(CompleteBoard), nl.
 
 optionSolucao(CompleteBoard, GameBoard) :-
+	write("SUDOKU:"), nl,
+	print(GameBoard), nl,
 	writeln("1 - Inserir um numero"),
 	writeln("2 - Remover um numero"),
 	writeln("3 - Fazer um check (verificar contradicao)"),
