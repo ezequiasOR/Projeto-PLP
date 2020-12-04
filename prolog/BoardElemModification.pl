@@ -18,8 +18,8 @@ removeElem( Matrix, NewMatrix ) :-
   read(Column), nl,
   ((Column < 1 ; Column > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
   ;
-  Y is Row - 1,
-  X is Column - 1,
+  Y is Column - 1,
+  X is Row - 1,
   replaceElem( Matrix , X , Y , 0 , NewMatrix ) ))
   .
 
@@ -36,8 +36,8 @@ insertElem( Matrix , NewMatrix ) :-
   read(NewValue), nl,
   ((NewValue < 1 ; NewValue > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
   ;
-  Y is Row - 1,
-  X is Column - 1,
+  Y is Column - 1,
+  X is Row - 1,
   replaceElem( Matrix , X , Y , NewValue , NewMatrix ) )))
   .
 
