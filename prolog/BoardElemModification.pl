@@ -1,3 +1,5 @@
+:-  module(boardElemModification,[removeElem/2,insertElem/2, replaceElem/5]).
+
 replaceElem( Matrix , X , Y , NewValue , NewMatrix ) :-
   append(RowPfx,[Row|RowSfx],Matrix),
   length(RowPfx,X) ,
@@ -7,13 +9,31 @@ replaceElem( Matrix , X , Y , NewValue , NewMatrix ) :-
   append(RowPfx,[RowNew|RowSfx],NewMatrix)
   .
 
-removeElem( Matrix , X , Y , 0 , NewMatrix ) :-
-  replaceElem( Matrix , X , Y , 0 , NewMatrix )
+removeElem( Matrix, NewMatrix ) :-
+  writeln("Digite o numero da linha: (entre 1 e 9)"),
+  read(Y), nl,
+  ((Y < 1 ; Y > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
+  ;
+  writeln("Digite o numero da coluna (entre 1 e 9)"),
+  read(X), nl,
+  ((X < 1 ; X > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , removeElem( Matrix, NewMatrix )
+  ;
+  replaceElem( Matrix , X , Y , 0 , NewMatrix ) ))
   .
 
-insertElem( Matrix , X , Y , NewValue , NewMatrix ) :-
-  (   (   NewValue =:= 1; NewValue =:= 2; NewValue =:= 3; NewValue =:= 4; NewValue =:= 5; NewValue =:= 6; NewValue =:= 7; NewValue =:= 8; NewValue =:= 9) ->
-  replaceElem( Matrix , X , Y , NewValue , NewMatrix )
-  ; writeln('Valor inválido, escolha um número entre 1 e 9'))
+insertElem( Matrix , NewMatrix ) :-
+  writeln("Digite o numero da linha: (entre 1 e 9)"),
+  read(Y), nl,
+  ((Y < 1 ; Y > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
+  ;
+  writeln("Digite o numero da coluna (entre 1 e 9)"),
+  read(X), nl,
+  ((X < 1 ; X > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
+  ;
+  writeln("Digite o novo valor (entre 1 e 9)"),
+  read(NewValue), nl,
+  ((NewValue < 1 ; NewValue > 9) -> writeln('Valor inválido, escolha um número entre 1 e 9') , insertElem( Matrix, NewMatrix )
+  ;
+  replaceElem( Matrix , X , Y , NewValue , NewMatrix ) )))
   .
 

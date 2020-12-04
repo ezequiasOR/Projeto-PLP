@@ -1,5 +1,6 @@
 :- use_module(makeBoard, [board/1]).
 % makeBoard:board(B).
+:- use_module(boardElemModification,[removeElem/2,insertElem/2]).
 
 options2(1):- writeln("ler os dados..."),
 	read(input), nl.
@@ -13,9 +14,9 @@ optionJogar :-
 	((Option > 3; Option < 1) -> writeln("Opcao invalida") ,
 		optionJogar ; options2(Option)).
 
-insertNumber(CompleteBoard):- writeln("esperando joao"), nl, optionSolucao(CompleteBoard).
+insertNumber(CompleteBoard):- boardElemModification:insertElem(CompleteBoard, NewBoard), nl, optionSolucao(NewBoard).
 
-removeNumber(CompleteBoard):- writeln("esperando joao"), nl, optionSolucao(CompleteBoard).
+removeNumber(CompleteBoard):- boardElemModification:removeElem(CompleteBoard, NewBoard), nl, optionSolucao(NewBoard).
 
 checkTable(CompleteBoard):- writeln("esperando caio"), nl, optionSolucao(CompleteBoard).
 
