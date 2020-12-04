@@ -18,7 +18,7 @@ insertNumber(CompleteBoard):- boardElemModification:insertElem(CompleteBoard, Ne
 
 removeNumber(CompleteBoard):- boardElemModification:removeElem(CompleteBoard, NewBoard), nl, optionSolucao(NewBoard).
 
-checkTable(CompleteBoard):- writeln("esperando caio"), nl, optionSolucao(CompleteBoard).
+checkTable(CompleteBoard):- check:checkTable(CompleteBoard, NewBoard), nl, optionSolucao(CompleteBoard).
 
 
 findElem(CompleteBoard, Row, Col, Elem):- 
@@ -34,7 +34,7 @@ getTip(CompleteBoard):-
 	writeln(Elem),
 	optionSolucao(CompleteBoard).
 
-checkWin(CompleteBoard):- writeln("esperando caio"), nl, optionSolucao(CompleteBoard).
+checkWin(CompleteBoard):- check2:compararTabuleiros(CompleteBoard, NewBoard), nl, optionSolucao(CompleteBoard).
 
 checkSolution(CompleteBoard):- writeln(CompleteBoard), nl, main.
 

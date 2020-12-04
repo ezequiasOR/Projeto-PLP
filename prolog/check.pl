@@ -1,7 +1,7 @@
 % Checking - Checagem comparativa do tabuleiro em jogo com o tabuleiro-resposta
 
-checkTable(ListBoard, CompleteBoard):-
-  checkTable(ListBoard, 0, CompleteBoard).
+checkTable(Board, CompleteBoard):-
+  checkTable(Board, 0, CompleteBoard).
 
 checkTable([H], N, CompleteBoard):-
   checkTable(H, N, 0, CompleteBoard),
@@ -31,15 +31,3 @@ checkCell(N, M, Board):-
   permutation(Values0, Values1),
   permutation(Values1, Values2),
   permutation(Values2, [1, 2, 3, 4, 5, 6, 7, 8, 9]).
-
-% Opção de checking simplificada // Testing
-
-%    compare_matrix(Board, CompleteBoard) :-
-%    matrix(Board, I, J, Value1),
-%    matrix(CompleteBoard, I, J, Value2),
-%    Value1 == Value2.
-
-%  compararTabuleiros(Board, CompleteBoard) :-
-%  (compare_matrix(Board, CompleteBoard) -> 
-%  writeln("PARABÉNS, VOCÊ GANHOU!");
-%  writeln("DISCREPÂNCIA ENCONTRADA")).
