@@ -36,14 +36,14 @@ getTip(CompleteBoard, GameBoard):-
 	read(Col), nl,
 	findElem(CompleteBoard, Row, Col, Elem),
 	boardElemModification:replaceElem(GameBoard, Row, Col, Elem, NewGameBoard),
-	writeln(NewGameBoard),
-	optionSolucao(CompleteBoard, GameBoard).
+	print(NewGameBoard),
+	optionSolucao(CompleteBoard, NewGameBoard).
 
 checkWin(CompleteBoard, GameBoard):-
 	check2:compararTabuleiros(NewBoard, CompleteBoard), nl,
 	optionSolucao(CompleteBoard).
 
-checkSolution(CompleteBoard):- writeln(CompleteBoard), nl, main.
+checkSolution(CompleteBoard):- print(CompleteBoard), nl, main.
 
 options3(1, CompleteBoard, GameBoard):- insertNumber(CompleteBoard, GameBoard), nl.
 options3(2, CompleteBoard, GameBoard):- removeNumber(CompleteBoard, GameBoard), nl.
@@ -75,3 +75,8 @@ main:- write("1 - Solucao"), nl,
 	read(Option), nl,
 	((Option > 4; Option < 1) -> writeln("Opcao invalida") ,
 		main ; options1(Option)).
+
+print([]).
+print([H|T]) :-
+  writeln(H),
+  print(T).
