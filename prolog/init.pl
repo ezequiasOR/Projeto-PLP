@@ -18,7 +18,7 @@ insertNumber(CompleteBoard):- boardElemModification:insertElem(CompleteBoard, Ne
 
 removeNumber(CompleteBoard):- boardElemModification:removeElem(CompleteBoard, NewBoard), nl, optionSolucao(NewBoard).
 
-checkTable(CompleteBoard):- check:checkTable(CompleteBoard, NewBoard), nl, optionSolucao(CompleteBoard).
+checkTable(CompleteBoard):- check:checkTable(NewBoard, CompleteBoard), nl, optionSolucao(CompleteBoard).
 
 
 findElem(CompleteBoard, Row, Col, Elem):- 
