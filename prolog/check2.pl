@@ -1,3 +1,4 @@
+:-  module(check2,[compararTabuleiros/2]).
 % Opção de checking simplificada // Testing
 
 compare_matrix(NewBoard, CompleteBoard) :-

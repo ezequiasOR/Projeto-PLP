@@ -1,6 +1,7 @@
 :- use_module(makeBoard, [board/1]).
 :- use_module(boardElemModification,[removeElem/2,insertElem/2,replaceElem/5]).
 :- use_module(emptyBoard,[gameBoard/2]).
+:- use_module(check2,[compararTabuleiros/2]).
 
 options2(1):- writeln("ler os dados..."),
 	read(input), nl.
@@ -41,8 +42,9 @@ getTip(CompleteBoard, GameBoard):-
 	optionSolucao(CompleteBoard, NewGameBoard).
 
 checkWin(CompleteBoard, GameBoard):-
-	check2:compararTabuleiros(NewBoard, CompleteBoard), nl,
-	optionSolucao(CompleteBoard).
+	check2:compararTabuleiros(CompleteBoard, GameBoard), nl,
+	print(GameBoard),
+	main.
 
 checkSolution(CompleteBoard):- print(CompleteBoard), nl, main.
 
