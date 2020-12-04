@@ -15,17 +15,17 @@ optionJogar :-
 		optionJogar ; options2(Option)).
 
 insertNumber(CompleteBoard, GameBoard):-
-	boardElemModification:insertElem(GameBoard, NewBoard), nl,
+	boardElemModification:insertElem(GameBoard, NewBoard), write(GameBoard), nl,
 	optionSolucao(CompleteBoard, NewBoard).
 
-removeNumber(CompleteBoard, GameBoard):- 
-	boardElemModification:removeElem(GameBoard, NewBoard), nl,
+removeNumber(CompleteBoard, GameBoard):-
+	boardElemModification:removeElem(GameBoard, NewBoard), write(GameBoard), nl,
 	optionSolucao(CompleteBoard, NewBoard).
 
 checkTable(CompleteBoard, GameBoard):-
 	check:checkTable(NewBoard, CompleteBoard), nl, optionSolucao(CompleteBoard, GameBoard).
 
-findElem(CompleteBoard, Row, Col, Elem):- 
+findElem(CompleteBoard, Row, Col, Elem):-
 	nth1(Row, CompleteBoard, ARow),
 	nth1(Col, ARow, Elem).
 
@@ -39,7 +39,7 @@ getTip(CompleteBoard, GameBoard):-
 	writeln(NewGameBoard),
 	optionSolucao(CompleteBoard, GameBoard).
 
-checkWin(CompleteBoard, GameBoard):- 
+checkWin(CompleteBoard, GameBoard):-
 	check2:compararTabuleiros(NewBoard, CompleteBoard), nl,
 	optionSolucao(CompleteBoard).
 
