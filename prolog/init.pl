@@ -37,7 +37,7 @@ getTip(CompleteBoard, GameBoard):-
 	findElem(CompleteBoard, Row, Col, Elem),
 	boardElemModification:replaceElem(GameBoard, Row, Col, Elem, NewGameBoard),
 	writeln(NewGameBoard),
-	optionSolucao(CompleteBoard).
+	optionSolucao(CompleteBoard, GameBoard).
 
 checkWin(CompleteBoard, GameBoard):- 
 	check2:compararTabuleiros(NewBoard, CompleteBoard), nl,
