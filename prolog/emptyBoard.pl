@@ -1,14 +1,23 @@
+:-  module(emptyBoard,[gameBoard/2]).
+
+replaceElem( Matrix , X , Y , NewValue , NewMatrix ) :-
+	append(RowPfx,[Row|RowSfx],Matrix),
+  	length(RowPfx,X) ,
+	append(ColPfx,[_|ColSfx],Row) ,
+	length(ColPfx,Y) ,
+	append(ColPfx,[NewValue|ColSfx],RowNew) ,
+	append(RowPfx,[RowNew|RowSfx],NewMatrix).
+
 cloneBoard([],[]).
-cloneBoard([H|T],[H|Z]):- clone(T,Z).
+cloneBoard([H|T],[H|B]):- cloneBoard(T,B).
 
-emptyBoard(0, CloneBoard, GameBoard):-
-	GameBoard = CloneBoard.
-emptyBoard(emptyCells, CloneBoard, GameBoard):-
-	random_between(1, 9, C),
-	random_between(1, 9, R),
-	% preciso inserir um 0 na posicao CloneBoard[R][C] - preciso da parte de joao
-
+emptyBoard(CloneBoard,0,CloneBoard).
+emptyBoard(CloneBoard,EmptyCells,GameBoard):-
+	random_between(0,8,C), random_between(0,8,R),
+	replaceElem(CloneBoard,R,C,0,CBoard),
+	EmptyCells1 is (EmptyCells - 1),
+	emptyBoard(CBoard,EmptyCells1,GameBoard).
 
 gameBoard(CompleteBoard, GameBoard):- 
 	cloneBoard(CompleteBoard, CloneBoard),
-	emptyBoard(52, CloneBoard, GameBoard).
+	emptyBoard(CloneBoard,55,GameBoard).

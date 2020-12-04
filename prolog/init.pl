@@ -1,6 +1,6 @@
 :- use_module(makeBoard, [board/1]).
-% makeBoard:board(B).
-:- use_module(boardElemModification,[removeElem/2,insertElem/2]).
+:- use_module(boardElemModification,[removeElem/2,insertElem/2,replaceElem/5]).
+:- use_module(emptyBoard,[gameBoard/2]).
 
 options2(1):- writeln("ler os dados..."),
 	read(input), nl.
@@ -14,38 +14,45 @@ optionJogar :-
 	((Option > 3; Option < 1) -> writeln("Opcao invalida") ,
 		optionJogar ; options2(Option)).
 
-insertNumber(CompleteBoard):- boardElemModification:insertElem(CompleteBoard, NewBoard), nl, optionSolucao(NewBoard).
+insertNumber(CompleteBoard, GameBoard):-
+	boardElemModification:insertElem(GameBoard, NewBoard), nl,
+	optionSolucao(CompleteBoard, NewBoard).
 
-removeNumber(CompleteBoard):- boardElemModification:removeElem(CompleteBoard, NewBoard), nl, optionSolucao(NewBoard).
+removeNumber(CompleteBoard, GameBoard):- 
+	boardElemModification:removeElem(GameBoard, NewBoard), nl,
+	optionSolucao(CompleteBoard, NewBoard).
 
-checkTable(CompleteBoard):- check:checkTable(NewBoard, CompleteBoard), nl, optionSolucao(CompleteBoard).
-
+checkTable(CompleteBoard, GameBoard):-
+	check:checkTable(NewBoard, CompleteBoard), nl, optionSolucao(CompleteBoard, GameBoard).
 
 findElem(CompleteBoard, Row, Col, Elem):- 
 	nth1(Row, CompleteBoard, ARow),
 	nth1(Col, ARow, Elem).
 
-getTip(CompleteBoard):-
+getTip(CompleteBoard, GameBoard):-
 	writeln("Digite o numero da linha: (entre 1 e 9)"),
 	read(Row), nl,
 	writeln("Digite o numero da Coluna (entre 1 e 9)") ,
 	read(Col), nl,
 	findElem(CompleteBoard, Row, Col, Elem),
-	writeln(Elem),
+	boardElemModification:replaceElem(GameBoard, Row, Col, Elem, NewGameBoard),
+	writeln(NewGameBoard),
 	optionSolucao(CompleteBoard).
 
-checkWin(CompleteBoard):- check2:compararTabuleiros(NewBoard, CompleteBoard), nl, optionSolucao(CompleteBoard).
+checkWin(CompleteBoard, GameBoard):- 
+	check2:compararTabuleiros(NewBoard, CompleteBoard), nl,
+	optionSolucao(CompleteBoard).
 
 checkSolution(CompleteBoard):- writeln(CompleteBoard), nl, main.
 
-options3(1, CompleteBoard):- insertNumber(CompleteBoard), nl.
-options3(2, CompleteBoard):- removeNumber(CompleteBoard), nl.
-options3(3, CompleteBoard):- checkTable(CompleteBoard), nl.
-options3(4, CompleteBoard):- getTip(CompleteBoard), nl.
-options3(5, CompleteBoard):- checkWin(CompleteBoard), nl.
-options3(6, CompleteBoard):- checkSolution(CompleteBoard), nl.
+options3(1, CompleteBoard, GameBoard):- insertNumber(CompleteBoard, GameBoard), nl.
+options3(2, CompleteBoard, GameBoard):- removeNumber(CompleteBoard, GameBoard), nl.
+options3(3, CompleteBoard, GameBoard):- checkTable(CompleteBoard, GameBoard), nl.
+options3(4, CompleteBoard, GameBoard):- getTip(CompleteBoard, GameBoard), nl.
+options3(5, CompleteBoard, GameBoard):- checkWin(CompleteBoard, GameBoard), nl.
+options3(6, CompleteBoard, GameBoard):- checkSolution(CompleteBoard), nl.
 
-optionSolucao(CompleteBoard) :-
+optionSolucao(CompleteBoard, GameBoard) :-
 	writeln("1 - Inserir um numero"),
 	writeln("2 - Remover um numero"),
 	writeln("3 - Fazer um check (verificar contradicao)"),
@@ -54,10 +61,12 @@ optionSolucao(CompleteBoard) :-
 	writeln("6 - Desistir e verificar solucao"),
 	read(Option), nl,
 	((Option > 6; Option < 1) -> writeln("Opcao invalida") ,
-		optionSolucao(CompleteBoard) ; options3(Option, CompleteBoard)).
+		optionSolucao(CompleteBoard, GameBoard) ; options3(Option, CompleteBoard, GameBoard)).
 
 options1(1):- optionJogar(), nl.
-options1(2):- makeBoard:board(CompleteBoard), optionSolucao(CompleteBoard), nl.
+options1(2):- makeBoard:board(CompleteBoard),
+	emptyBoard:gameBoard(CompleteBoard, GameBoard),
+	optionSolucao(CompleteBoard, GameBoard), nl.
 options1(3):- halt.
 
 main:- write("1 - Solucao"), nl,
