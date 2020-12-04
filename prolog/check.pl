@@ -1,7 +1,7 @@
 % Checking - Checagem comparativa do tabuleiro em jogo com o tabuleiro-resposta
 
-checkTable(Board, CompleteBoard):-
-  checkTable(Board, 0, CompleteBoard).
+checkTable(NewBoard, CompleteBoard):-
+  checkTable(NewBoard, 0, CompleteBoard).
 
 checkTable([H], N, CompleteBoard):-
   checkTable(H, N, 0, CompleteBoard),
