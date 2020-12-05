@@ -50,6 +50,15 @@ findNeighborHorizontal(_, 9, []):- !.
 findNeighborHorizontal([N|_], Counter, List):-
   TmpCounter is Counter + 1,
   findNeighborHorizontal([N, _], TmpCounter, TmpList),
+
+findNeighborSquare([N, M | _], List):-
+  TmpN is (N//3)*3,
+  TmpM is (M//3)*3,
+  TmpNPlus1 is TmpN + 1,
+  TmpMPlus1 is TmpM + 1,
+  TmpNPlus2 is TmpN + 2,
+  TmpMPlus2 is TmpM + 2,
+  List = [[TmpN, TmpM], [TmpN, TmpMPlus1], [TmpN, TmpMPlus2], [TmpNPlus1, TmpM], [TmpNPlus1, TmpMPlus1], [TmpNPlus1, TmpMPlus2], [TmpNPlus2, TmpM], [TmpNPlus2, TmpMPlus1], [TmpNPlus2, TmpMPlus2]].
   append([[N, Counter]], TmpList, List).
 
 getNeighborsValue(Board, [H], NeighborsValues):-
