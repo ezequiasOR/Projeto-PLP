@@ -2,9 +2,9 @@
 % Opção de checking simplificada // Testing
 
 compare_matrix(NewBoard, CompleteBoard) :-
-   matrix(Board, I, J, Value1),
-   matrix(CompleteBoard, I, J, Value2),
-   Value1 == Value2.
+   %matrix(Board, I, J, Value1),
+   %matrix(CompleteBoard, I, J, Value2),
+   NewBoard == CompleteBoard.
 
 compararTabuleiros(NewBoard, CompleteBoard) :-
   (compare_matrix(NewBoard, CompleteBoard) -> 

@@ -44,7 +44,7 @@ getTip(CompleteBoard, GameBoard):-
 checkWin(CompleteBoard, GameBoard):-
 	check2:compararTabuleiros(CompleteBoard, GameBoard), nl,
 	print(GameBoard),
-	main.
+	optionSolucao(CompleteBoard, GameBoard).
 
 checkSolution(CompleteBoard):- print(CompleteBoard), nl, main.
 
