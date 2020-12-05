@@ -31,3 +31,35 @@ checkCell(N, M, Board):-
   permutation(Values0, Values1),
   permutation(Values1, Values2),
   permutation(Values2, [1, 2, 3, 4, 5, 6, 7, 8, 9]).
+
+findNeighborVertival(Pos, List):-
+  findNeighborVertival(Pos, 0, NewBoard).
+
+findNeighborVertival(_, 9, []):- !.
+
+findNeighborVertival([_, M|_], Counter, List):-
+  TmpCounter is Counter + 1,
+  findNeighborVertival([_, M], TmpCounter, TmpList),
+  append([[Counter, M]], TmpList, List).
+
+findNeighborHorizontal(Pos, List):-
+  findNeighborHorizontal(Pos, 0, List).
+
+findNeighborHorizontal(_, 9, []):- !.
+
+findNeighborHorizontal([N|_], Counter, List):-
+  TmpCounter is Counter + 1,
+  findNeighborHorizontal([N, _], TmpCounter, TmpList),
+  append([[N, Counter]], TmpList, List).
+
+getNeighborsValue(Board, [H], NeighborsValues):-
+  [N, M|_] = H,
+  get2D(N, M, Board, Result),
+  NeighborsValues = [Result],
+  !.
+
+getNeighborsValue(Board, [H|T], NeighborsValues):-
+  [N, M|_] = H,
+  getNeighborsValue(Board, T, TmpAns),
+  get2D(N, M, Board, Result),
+  append([Result], TmpAns, NeighborsValues).
